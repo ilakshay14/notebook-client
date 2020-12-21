@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.prod.js",
     "start": "webpack-dev-server --open --config webpack.dev.js",
-    "host": "webpack-dev-server --open --config webpack.dev.js --host 192.168.29.173"
+    "host": "webpack-dev-server --open --config webpack.dev.js --host 192.168.29.67"
   },
   "keywords": [],
   "author": "",
@@ -38,6 +38,7 @@
     "gh-pages": "^2.1.1",
     "graphql": "^15.4.0",
     "jquery": "^3.4.1",
+    "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router": "^5.2.0",
