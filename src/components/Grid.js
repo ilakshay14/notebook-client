@@ -1,23 +1,36 @@
-import React from 'react'
-import { Grid, Image } from 'semantic-ui-react'
+import { useContext } from 'react'
+import { Grid} from 'semantic-ui-react'
 import PostCard from './PostCard'
 
-const ThreeColumnGrid = ({ heading, data }) => (
-    <Grid columns={3}>
-        <Grid.Row className="page-title">
-            <h1>{heading}</h1>
-        </Grid.Row>
-        <Grid.Row>
-            {
-                data.map(value =>
-                    <Grid.Column key={value.id} style={{ marginBottom: 20 }}>
-                        <PostCard {...value}/>
-                    </Grid.Column>
-                )
-            }
+import { AuthContext } from '../context/auth';
+import PostForm from './PostForm';
 
-        </Grid.Row>
-    </Grid>
-)
+const ThreeColumnGrid = ({ heading, posts}) => {
+
+    const { user } = useContext(AuthContext);
+    
+    return (
+        <Grid columns={3}>
+            <Grid.Row className="page-title">
+                <h1>{heading}</h1>
+            </Grid.Row>
+            <Grid.Row>
+                {
+                    user && <Grid.Column>
+                        <PostForm/>
+                    </Grid.Column>
+                }
+                {
+                    posts.map(value =>
+                        <Grid.Column key={value.id} style={{ marginBottom: 20 }}>
+                            <PostCard post={value} />
+                        </Grid.Column>
+                    )
+                }
+
+            </Grid.Row>
+        </Grid>
+    )
+}
 
 export default ThreeColumnGrid

@@ -1,8 +1,9 @@
 import { Card, Icon, Label, Button, Image } from 'semantic-ui-react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react'
 
-const PostCard = ({ body, createdAt, id, username, likeCount, commentCount, likes }) => {
+const PostCard = ({post}) => {
 
     const likePost = () => {
         console.log('like post');
@@ -12,6 +13,10 @@ const PostCard = ({ body, createdAt, id, username, likeCount, commentCount, like
         console.log('coomment on post');
     }
 
+    useEffect(() => {
+        //console.log(post);
+    }, []);
+
     return (
         <Card fluid>
             <Card.Content>
@@ -20,10 +25,10 @@ const PostCard = ({ body, createdAt, id, username, likeCount, commentCount, like
                     size='mini'
                     src='https://react.semantic-ui.com/images/avatar/large/molly.png'
                 />
-                <Card.Header>{username}</Card.Header>
-                <Card.Meta as={Link} to={`/posts/${id}`}>{moment(createdAt).fromNow(true)}</Card.Meta>
+                <Card.Header>{post.username}</Card.Header>
+                <Card.Meta as={Link} to={`/posts/${post.id}`}>{moment(post.createdAt).fromNow(true)}</Card.Meta>
                 <Card.Description>
-                    {body}
+                    {post.body}
                 </Card.Description>
             </Card.Content>
             <Card.Content extra>
@@ -32,7 +37,7 @@ const PostCard = ({ body, createdAt, id, username, likeCount, commentCount, like
                             <Icon name='heart' />
                         </Button>
                         <Label as='a' basic color='violet' pointing='left'>
-                            { likeCount? likeCount : 0 }
+                            { post.likeCount? post.likeCount : 0 }
                         </Label>
                     </Button>
 
@@ -41,7 +46,7 @@ const PostCard = ({ body, createdAt, id, username, likeCount, commentCount, like
                             <Icon name='comments' />
                         </Button>
                         <Label as='a' basic color='blue' pointing='left'>
-                            { commentCount? commentCount : 0 }
+                            { post.commentCount? post.commentCount : 0 }
                         </Label>
                     </Button>
             </Card.Content>

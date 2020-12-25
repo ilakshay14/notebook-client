@@ -2,20 +2,22 @@ import { gql } from '@apollo/client';
 
 export const FETCH_ALL_POSTS = gql`
     {
-        getPosts{
+        getPosts {
             id
-            createdAt
             body
+            createdAt
             username
-            comments{
-                body
+            likeCount
+            likes {
                 username
-            }
-            likes{
-                username
-                createdAt
             }
             commentCount
+            comments {
+                id
+                username
+                createdAt
+                body
+            }
         }
     }
 `;

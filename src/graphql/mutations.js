@@ -31,11 +31,41 @@ export const LOGIN_USER = gql`
             username: $username
             password: $password
             ){
+                id
+                email
+                token
+                username
+                createdAt
+            }
+    }
+`;
+
+export const CREATE_POST = gql`
+    mutation createPost(
+        $body: String!
+    ){
+        createPost(body:$body){
             id
-            email
-            token
-            username
+            body
             createdAt
+            username
+            likeCount
+            likes {
+                username
+            }
+            commentCount
+            comments {
+                id
+                username
+                createdAt
+                body
+            }
         }
+    }
+`;
+
+export const DELETE_POST = gql`
+    mutation deletePost($postId: String!){
+        deletePost(postId: $postId)
     }
 `;
