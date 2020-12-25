@@ -51,9 +51,11 @@ const PostForm = () => {
 
             </Form>
             {
-                // errors && <div className="ui error message">
-                //     <p>{errors}</p>
-                // </div>
+                errors && <div className="ui error message" style={{ marginBottom: 20 }}>
+                    <ul className="list">
+                        <li>{errors}</li>
+                    </ul>
+                </div>
             }
         </div>
     );

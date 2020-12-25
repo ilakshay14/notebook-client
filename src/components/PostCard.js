@@ -1,21 +1,17 @@
 import { Card, Icon, Label, Button, Image } from 'semantic-ui-react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react'
+import { useContext } from 'react'
+import { AuthContext } from '../context/auth';
+import LikeButton from './LikeButton';
 
-const PostCard = ({post}) => {
-
-    const likePost = () => {
-        console.log('like post');
-    }
+const PostCard = ({ post }) => {
+    const { user } = useContext(AuthContext);
+    const { id, likes, likeCount} = post;
 
     const coommentOnPost = () => {
         console.log('coomment on post');
     }
-
-    useEffect(() => {
-        //console.log(post);
-    }, []);
 
     return (
         <Card fluid>
@@ -32,23 +28,24 @@ const PostCard = ({post}) => {
                 </Card.Description>
             </Card.Content>
             <Card.Content extra>
-                    <Button as='div' labelPosition='right' onClick={likePost}>
-                        <Button color='violet' basic>
-                            <Icon name='heart' />
-                        </Button>
-                        <Label as='a' basic color='violet' pointing='left'>
-                            { post.likeCount? post.likeCount : 0 }
-                        </Label>
-                    </Button>
+                <LikeButton user={ user } post={{ id, likes, likeCount }}/>
 
-                    <Button as='div' labelPosition='right' pointing='left' onClick={coommentOnPost}>
-                        <Button basic color='blue'>
-                            <Icon name='comments' />
-                        </Button>
-                        <Label as='a' basic color='blue' pointing='left'>
-                            { post.commentCount? post.commentCount : 0 }
-                        </Label>
+                <Button as='div' labelPosition='right' pointing='left' as={Link} to={`/post/${post.id}`}>
+                    <Button basic color='blue'>
+                        <Icon name='comments' />
                     </Button>
+                    <Label basic color='blue' pointing='left'>
+                        {post.commentCount ? post.commentCount : 0}
+                    </Label>
+                </Button>
+                {
+                    user && user.username === post.username && (
+                        <Button as='div' color="red" onClick={'hi'} floated="right">
+                            <Icon name='trash' style={{ margin: 0}}/>
+                            
+                        </Button>
+                    )
+                }
             </Card.Content>
         </Card>
     );

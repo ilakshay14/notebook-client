@@ -65,7 +65,20 @@ export const CREATE_POST = gql`
 `;
 
 export const DELETE_POST = gql`
-    mutation deletePost($postId: String!){
+    mutation deletePost($postId: ID!){
         deletePost(postId: $postId)
+    }
+`;
+
+export const LIKE_POST = gql`
+    mutation likePost($postId: ID!){
+        likePost(postId:$postId){
+            id
+            likes{
+                id
+                username
+            }
+            likeCount
+        }
     }
 `;

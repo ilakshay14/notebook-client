@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { Grid} from 'semantic-ui-react'
+import { Grid, Transition } from 'semantic-ui-react'
 import PostCard from './PostCard'
 
 import { AuthContext } from '../context/auth';
@@ -20,6 +20,7 @@ const ThreeColumnGrid = ({ heading, posts}) => {
                         <PostForm/>
                     </Grid.Column>
                 }
+                <Transition.Group>
                 {
                     posts.map(value =>
                         <Grid.Column key={value.id} style={{ marginBottom: 20 }}>
@@ -27,6 +28,7 @@ const ThreeColumnGrid = ({ heading, posts}) => {
                         </Grid.Column>
                     )
                 }
+                </Transition.Group>
 
             </Grid.Row>
         </Grid>
