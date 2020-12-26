@@ -5,6 +5,8 @@ import { FETCH_POST } from '../graphql/queries';
 import LikeButton from '../components/LikeButton';
 import { AuthContext } from '../context/auth';
 import { useContext } from 'react';
+import DeleteButton from '../components/DeleteButton';
+import { Link } from 'react-router-dom';
 
 const SinglePost = (props) => {
     const postId = props.match.params.postId;
@@ -15,7 +17,9 @@ const SinglePost = (props) => {
     })
 
     const { user } = useContext(AuthContext);
-
+    const deletePostCallback = () => {
+        props.history.push('/');
+    }
     let postMarkup;
     if (!data?.getPost) {
         postMarkup = <p>Loading post...</p>
@@ -51,6 +55,11 @@ const SinglePost = (props) => {
                                         {commentCount ? commentCount : 0}
                                     </Label>
                                 </Button>
+                                {
+                                    user && user.username === username && (
+                                        <DeleteButton postId={id} callback={deletePostCallback}/>
+                                    )
+                                }
                             </Card.Content>
                         </Card>
                     </Grid.Column>
@@ -61,7 +70,7 @@ const SinglePost = (props) => {
 
     return (
         <>
-        { postMarkup }
+            { postMarkup}
         </>
     );
 }

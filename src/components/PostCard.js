@@ -41,7 +41,7 @@ const PostCard = ({ post }) => {
                 </Button>
                 {
                     user && user.username === post.username && (
-                        <DeleteButton user={user} postId={ id }/>
+                        <DeleteButton postId={ id }/>
                     )
                 }
             </Card.Content>
