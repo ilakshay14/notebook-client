@@ -1,12 +1,13 @@
-import { useQuery } from '@apollo/client';
-import { Card, Grid, Button, Icon, Label, Image } from 'semantic-ui-react';
+import { useQuery, useMutation } from '@apollo/client';
+import { Card, Grid, Button, Icon, Label, Image, Form } from 'semantic-ui-react';
 import moment from 'moment';
 import { FETCH_POST } from '../graphql/queries';
 import LikeButton from '../components/LikeButton';
 import { AuthContext } from '../context/auth';
-import { useContext } from 'react';
+import { useContext, useRef, useState } from 'react';
 import DeleteButton from '../components/DeleteButton';
 import { Link } from 'react-router-dom';
+import { SUBMIT_COMMENT } from '../graphql/mutations';
 
 const SinglePost = (props) => {
     const postId = props.match.params.postId;
@@ -17,6 +18,19 @@ const SinglePost = (props) => {
     })
 
     const { user } = useContext(AuthContext);
+    const commentInputRef = useRef(null);
+    const [comment, setcomment] = useState('');
+    const [submitComment] = useMutation(SUBMIT_COMMENT, {
+        variables: {
+            postId,
+            body: comment
+        },
+        update() {
+            setcomment('');
+            commentInputRef.current.blur();
+        }
+    })
+
     const deletePostCallback = () => {
         props.history.push('/');
     }
@@ -57,11 +71,50 @@ const SinglePost = (props) => {
                                 </Button>
                                 {
                                     user && user.username === username && (
-                                        <DeleteButton postId={id} callback={deletePostCallback}/>
+                                        <DeleteButton postId={id} callback={deletePostCallback} />
                                     )
                                 }
                             </Card.Content>
                         </Card>
+                        {user && (
+                            <Card fluid>
+                                <Card.Content>
+                                    <p>Post a comment</p>
+                                    <Form>
+                                        <div className="ui action input fluid">
+                                            <input
+                                                type="text"
+                                                placeholder="write something"
+                                                name="comment"
+                                                value={comment}
+                                                onChange={event => setcomment(event.target.value)}
+                                                ref={commentInputRef}
+                                            />
+                                            <button type="submit" className="ui button violet"
+                                                disabled={comment.trim() === ''}
+                                                onClick={submitComment}
+                                            >
+                                                Submit
+                                        </button>
+                                        </div>
+                                    </Form>
+                                </Card.Content>
+                            </Card>
+                        )}
+                        {
+                            comments.map(comment => (
+                                <Card fluid key={comment.id}>
+                                    <Card.Content>
+                                        {user && user.username === comment.username && (
+                                            <DeleteButton postId={id} commentId={comment.id} />
+                                        )}
+                                        <Card.Header>{comment.username}</Card.Header>
+                                        <Card.Meta>{moment(comment.createdAt).fromNow(true)}</Card.Meta>
+                                        <Card.Description>{comment.body}</Card.Description>
+                                    </Card.Content>
+                                </Card>
+                            ))
+                        }
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

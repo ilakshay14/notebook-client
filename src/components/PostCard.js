@@ -1,4 +1,4 @@
-import { Card, Icon, Label, Button, Image } from 'semantic-ui-react';
+import { Card, Icon, Label, Button, Image, Popup } from 'semantic-ui-react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { useContext } from 'react'
@@ -8,7 +8,7 @@ import DeleteButton from './DeleteButton';
 
 const PostCard = ({ post }) => {
     const { user } = useContext(AuthContext);
-    const { id, likes, likeCount} = post;
+    const { id, likes, likeCount } = post;
 
     const coommentOnPost = () => {
         console.log('coomment on post');
@@ -29,19 +29,24 @@ const PostCard = ({ post }) => {
                 </Card.Description>
             </Card.Content>
             <Card.Content extra>
-                <LikeButton user={ user } post={{ id, likes, likeCount }}/>
+                <LikeButton user={user} post={{ id, likes, likeCount }} />
+                <Popup content="Comment on post"
+                inverted
+                    trigger={
+                        <Button as='div' labelPosition='right' pointing='left' as={Link} to={`/post/${post.id}`}>
+                            <Button basic color='blue'>
+                                <Icon name='comments' />
+                            </Button>
+                            <Label basic color='blue' pointing='left'>
+                                {post.commentCount ? post.commentCount : 0}
+                            </Label>
+                        </Button>
+                    }
+                />
 
-                <Button as='div' labelPosition='right' pointing='left' as={Link} to={`/post/${post.id}`}>
-                    <Button basic color='blue'>
-                        <Icon name='comments' />
-                    </Button>
-                    <Label basic color='blue' pointing='left'>
-                        {post.commentCount ? post.commentCount : 0}
-                    </Label>
-                </Button>
                 {
                     user && user.username === post.username && (
-                        <DeleteButton postId={ id }/>
+                        <DeleteButton postId={id} />
                     )
                 }
             </Card.Content>

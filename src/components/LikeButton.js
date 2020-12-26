@@ -35,7 +35,7 @@ const LikeButton = ({ user, post }) => {
                 <Icon name='heart' />
             </Button>
         )
-
+ 
     return (
         <Button as='div' labelPosition='right' onClick={likePost}>
             { likeButton}
