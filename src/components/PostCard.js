@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react'
 import { AuthContext } from '../context/auth';
 import LikeButton from './LikeButton';
+import DeleteButton from './DeleteButton';
 
 const PostCard = ({ post }) => {
     const { user } = useContext(AuthContext);
@@ -40,10 +41,7 @@ const PostCard = ({ post }) => {
                 </Button>
                 {
                     user && user.username === post.username && (
-                        <Button as='div' color="red" onClick={'hi'} floated="right">
-                            <Icon name='trash' style={{ margin: 0}}/>
-                            
-                        </Button>
+                        <DeleteButton user={user} postId={ id }/>
                     )
                 }
             </Card.Content>

@@ -10,6 +10,7 @@ import Nav from './components/Nav';
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import SinglePost from './pages/SinglePost'
 
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
                     <Route exact path='/' component={Home} />
                     <AuthRoute path="/register" component={Register} />
                     <AuthRoute path="/login" component={Login} />
+                    <Route path="/posts/:postId" component={SinglePost}/>
                 </Container>
             </Router>
         </AuthProvider>
