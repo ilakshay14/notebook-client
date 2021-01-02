@@ -1,4 +1,4 @@
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Icon } from 'semantic-ui-react';
 import { useForm } from '../util/hooks';
 import { CREATE_POST } from '../graphql/mutations';
 import { FETCH_ALL_POSTS } from '../graphql/queries';
@@ -18,9 +18,11 @@ const PostForm = () => {
                 query: FETCH_ALL_POSTS
             });
             //data.getPosts = [result.data.createPost, ...data.getPosts];
-            proxy.writeQuery({ query: FETCH_ALL_POSTS, data:{
-                getPosts: [result.data.createPost, ...data.getPosts]
-            }});
+            proxy.writeQuery({
+                query: FETCH_ALL_POSTS, data: {
+                    getPosts: [result.data.createPost, ...data.getPosts]
+                }
+            });
             values.body = '';
         },
         onError(error) {
@@ -33,22 +35,24 @@ const PostForm = () => {
     }
 
     return (
-        <div>
+        <div className="newPostForm">
             <Form onSubmit={onSubmit}>
-                <h2>Create a post:</h2>
-                <Form.Field>
-                    <Form.Input
-                        placegolder="Hi World!"
-                        name="body"
-                        onChange={onChange}
-                        value={values.body}
-                    />
-                    <Button type="submit"
-                        color="violet">
-                        Submit
-                </Button>
-                </Form.Field>
-
+                    <Form.Field>
+                        <Form.Group>
+                        <Form.Input
+                            placeholder="any thoughts?"
+                            name="body"
+                            onChange={onChange}
+                            value={values.body}
+                            width={15}
+                        />
+                        <Button icon type="submit"
+                            color="violet" width={1}>
+                            
+                            <Icon name="pencil"/>
+                        </Button>
+                        </Form.Group>
+                    </Form.Field>
             </Form>
             {
                 errors && <div className="ui error message" style={{ marginBottom: 20 }}>

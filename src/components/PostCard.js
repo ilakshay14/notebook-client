@@ -10,10 +10,6 @@ const PostCard = ({ post }) => {
     const { user } = useContext(AuthContext);
     const { id, likes, likeCount } = post;
 
-    const coommentOnPost = () => {
-        console.log('coomment on post');
-    }
-
     return (
         <Card fluid>
             <Card.Content>
@@ -33,7 +29,7 @@ const PostCard = ({ post }) => {
                 <Popup content="Comment on post"
                 inverted
                     trigger={
-                        <Button as='div' labelPosition='right' pointing='left' as={Link} to={`/post/${post.id}`}>
+                        <Button as='div' labelPosition='right' pointing='left' as={Link} to={`/posts/${post.id}`}>
                             <Button basic color='blue'>
                                 <Icon name='comments' />
                             </Button>

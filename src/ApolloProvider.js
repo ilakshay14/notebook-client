@@ -15,7 +15,7 @@ const authLink = setContext(() => {
 })
 
 const httpLink = new createHttpLink({
-    uri: 'http://192.168.29.67:5000'
+    uri: 'http://localhost:5000'
 });
 
 export const client = new ApolloClient({
