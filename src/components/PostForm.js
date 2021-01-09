@@ -32,6 +32,7 @@ const PostForm = () => {
     })
 
     function createPostCallback() {
+        console.log(values)
         createPost();
     }
 
@@ -40,13 +41,13 @@ const PostForm = () => {
             <form onSubmit={onSubmit}>
                 <FormGroup row>
                     <TextField
-                        error={ errors && errors.length > 0}
+                        error={ errors? true : false}
                         id="outlined-error"
-                        label={errors ? "Error" : ''}
-                        defaultValue={values.body}
+                        label={errors ? errors : ''}
+                        defaultValue={ values.body }
+                        
                         variant="outlined"
                         placeholder="any thoughts?"
-                        helperText={errors || ''}
                         onChange={onChange}
                         style={{
                             width: '80%',
@@ -58,13 +59,6 @@ const PostForm = () => {
                     </Button>
                 </FormGroup>
             </form>
-            {
-                errors && <div className="ui error message" style={{ marginBottom: 20 }}>
-                    <ul className="list">
-                        <li>{errors}</li>
-                    </ul>
-                </div>
-            }
         </div>
     );
 }
