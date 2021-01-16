@@ -1,62 +1,89 @@
-import { useContext, useState } from 'react'
-import { Menu } from 'semantic-ui-react'
+import { useContext } from 'react'
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/auth';
 
+import { AppBar, IconButton, Toolbar, Typography, Button } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+import HomeIcon from '@material-ui/icons/Home';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#8E44AD',
+        }
+    },
+});
+
 const Nav = () => {
-    const pathname = window.location.pathname;
-    const path = pathname ==='/'? 'home' : pathname.substr(1);
+    // const pathname = window.location.pathname;
+    // const path = pathname === '/' ? 'home' : pathname.substr(1);
 
-    const [activeItem, setActiveItem] = useState(path);
-    const handleItemClick = (e, { name }) => setActiveItem(name);
+    // const [activeItem, setActiveItem] = useState(path);
+    // const handleItemClick = (e, { name }) => setActiveItem(name);
 
-    const { user, logout } = useContext(AuthContext); 
+    const { user, logout } = useContext(AuthContext);
 
-    const menuBar = user ? (
-        <Menu pointing secondary size="massive" color="violet">
-            <Menu.Item
-                name={user.username}
-                active
-                as={Link}
-                to="/"
-            />
-            
-            <Menu.Menu position='right'>
-                <Menu.Item
-                    name='logout'
+    const MenuBar = user ? (
+        <AppBar position='static'>
+            <Toolbar>
+                <Link to='/'>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                    >
+                        <HomeIcon />
+                    </IconButton>
+                </Link>
+                <Typography variant='h5' style={{ flexGrow: 1, textAlign: 'center' }}>
+                    The Notebook
+                </Typography>
+                <IconButton
+
+                    color="inherit"
+                >
+                    <AccountCircleIcon />
+                </IconButton>
+                <IconButton
+                    edge="end"
+                    color="inherit"
                     onClick={logout}
-                />
-            </Menu.Menu>
-        </Menu>
-    ) : (
-        <Menu pointing secondary size="massive" color="violet">
-            <Menu.Item
-                name='home'
-                active={activeItem === 'home'}
-                onClick={handleItemClick}
-                as={Link}
-                to="/"
-            />
-            
-            <Menu.Menu position='right'>
-                <Menu.Item
-                    name='register'
-                    active={activeItem === 'register'}
-                    onClick={handleItemClick}
-                    as={Link}
-                    to="/register"
-                />
-                <Menu.Item
-                    name='login'
-                    active={activeItem === 'login'}
-                    onClick={handleItemClick}
-                    as={Link}
-                    to="/login"
-                />
-            </Menu.Menu>
-        </Menu>
-    );
-    return menuBar; 
+                >
+                    <ExitToAppIcon />
+                </IconButton>
+            </Toolbar>
+
+        </AppBar>
+    ) : (<AppBar position='static'>
+        <Toolbar>
+            <Link to='/'>
+                <IconButton
+                    edge="start"
+                    color="inherit"
+                >
+                    <HomeIcon />
+                </IconButton>
+            </Link>
+            <Typography variant='h5' style={{ flexGrow: 1, textAlign: 'center' }}>
+                The Notebook
+        </Typography>
+            <Link to='/login'>
+                <IconButton
+                    edge="end"
+                    color="inherit"
+                >
+                    <AccountCircleIcon />
+                </IconButton>
+            </Link>
+        </Toolbar>
+
+    </AppBar>);
+
+    return <ThemeProvider theme={theme}>
+        {MenuBar}
+    </ThemeProvider>;
 }
 
 export default Nav;
