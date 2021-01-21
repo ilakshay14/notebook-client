@@ -2,20 +2,11 @@ import { useContext } from 'react'
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/auth';
 
-import { AppBar, IconButton, Toolbar, Typography, Button } from '@material-ui/core';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
 
 import HomeIcon from '@material-ui/icons/Home';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
-const theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: '#8E44AD',
-        }
-    },
-});
 
 const Nav = () => {
     // const pathname = window.location.pathname;
@@ -81,9 +72,7 @@ const Nav = () => {
 
     </AppBar>);
 
-    return <ThemeProvider theme={theme}>
-        {MenuBar}
-    </ThemeProvider>;
+    return MenuBar;
 }
 
 export default Nav;

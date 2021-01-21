@@ -14,10 +14,15 @@ import HomePage from './pages/HomePage';
 import { CssBaseline } from '@material-ui/core';
 import { Container } from 'semantic-ui-react';
 
+
+import { ThemeProvider } from '@material-ui/core/styles';
+import Theme from './util/Theme';
+
 const App = () => {
 
     return (
         <AuthProvider>
+            <ThemeProvider theme={Theme}>
             <CssBaseline/>
             <Router>
             <Nav />
@@ -28,6 +33,7 @@ const App = () => {
                     <Route path="/posts/:postId" component={SinglePost}/>
                 </Container>
             </Router>
+            </ThemeProvider>
         </AuthProvider>
 
     );
